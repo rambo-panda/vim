@@ -1,0 +1,318 @@
+"==========================================
+" bundle 插件管理和配置项
+"==========================================
+"------------------------------------------- begin of configs --------------------------------------------
+
+"################### 包依赖 #####################
+"package dependence:  ctags
+"python dependence:  pep8, pyflake
+"
+"非兼容vi模式。去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限
+set nocompatible
+" configure Vundle
+filetype off " required! turn off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+
+"################### 插件管理 ###################
+
+"使用Vundle来管理插件
+" vim plugin bundle control, command model
+" :BundleInstall     install 安装配置的插件
+" :BundleInstall!    update  更新
+" :BundleClean       remove plugin not in list 删除本地无用插件
+Bundle 'gmarik/vundle'
+
+"################### 基础 ######################
+
+" 多语言语法检查
+Bundle 'scrooloose/syntastic'
+let g:syntastic_error_symbol='>>'
+let g:syntastic_warning_symbol='>'
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_highlighting = 0
+let g:syntastic_javascript_checkers = ['jscs', 'jshint']
+let g:syntastic_html_checkers=['tidy', 'jscs', 'jshint']
+
+"coffeescript https://blog.othree.net/log/2013/06/21/syntastic-coffeelint/
+let g:syntastic_coffee_checkers = ['coffeelint', 'coffee']
+let g:syntastic_coffee_coffeelint_args = "--csv -f ~/command_help/files/coffeelint-configuration.json"
+
+highlight SyntasticErrorSign guifg=white guibg=black
+
+
+"################### 自动补全 ###################
+
+" 代码自动补全
+"迄今为止用到的最好的自动VIM自动补全插件
+Bundle 'Valloric/YouCompleteMe'
+
+"注释和字符串中的文字也会被收入补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 0
+let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
+let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
+let g:ycm_seed_identifiers_with_syntax=1   "语言关键字补全, 不过python关键字都很短，所以，需要的自己打开
+
+let g:ycm_collect_identifiers_from_tags_files = 1
+" 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
+" old version
+if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
+    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
+endif
+" new version
+if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
+    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+endif
+
+" 直接触发自动补全
+let g:ycm_key_invoke_completion = '<C-Space>'
+let g:ycm_key_list_select_completion = ['<C-n>']
+let g:ycm_key_list_previous_completion = ['<C-p>']
+
+" 黑名单,不启用
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'gitcommit' : 1,
+      \}
+
+" 代码片段快速插入
+Bundle 'SirVer/ultisnips'
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+let g:UltiSnipsEditSplit="vertical"
+
+"################### 快速编码 ###################
+
+" 快速注释
+Bundle 'scrooloose/nerdcommenter'
+
+" 自动补全单引号，双引号等
+Bundle 'Raimondi/delimitMate'
+" 快速加入修改环绕字符
+Bundle 'tpope/vim-surround'
+" replace 同surround配合使用
+Bundle 'tpope/vim-repeat'
+
+" 快速赋值语句对齐
+Bundle 'godlygeek/tabular'
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+
+" :号也对齐
+nmap <Leader>a: :Tabularize /:<CR>
+vmap <Leader>a: :Tabularize /:<CR>
+
+" 快速去行尾空格 [, + <Space>]
+Bundle 'bronson/vim-trailing-whitespace'
+map <leader><space> :FixWhitespace<cr>
+
+"################### 快速移动 ###################
+
+"更高效的移动
+Bundle 'Lokaltog/vim-easymotion'
+let g:EasyMotion_leader_key = 'f'
+
+"html 中  <%  %> 语法着色
+Bundle 'vim-scripts/matchit.zip'
+
+" 显示marks - 方便自己进行标记和跳转
+" m[a-zA-Z] add mark
+" '[a-zA-Z] go to mark
+" m<Space>  del all marks
+Bundle "kshenoy/vim-signature"
+
+"################### 快速选中 ###################
+" 选中区块
+Bundle 'terryma/vim-expand-region'
+map + <Plug>(expand_region_expand)
+map - <Plug>(expand_region_shrink)
+
+" 多光标选中编辑 n next='<c-n>' prev='<c-p>' skip='<c-x>' quit='<esc>'
+Bundle 'terryma/vim-multiple-cursors'
+
+"################### 功能相关 ###################
+
+" 文件搜索
+Bundle 'kien/ctrlp.vim'
+let g:ctrlp_map = '<leader>p'
+let g:ctrlp_cmd = 'CtrlP'
+"map <leader>f :CtrlPMRU<CR>
+nnoremap <silent> <F7> :CtrlP<CR>
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux"
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz)$',
+    \ }
+"\ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
+
+" ctrlp插件1 - 不用ctag进行函数快速跳转
+Bundle 'tacahiroy/ctrlp-funky'
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+let g:ctrlp_funky_syntax_highlight = 1
+let g:ctrlp_extensions = ['funky']
+
+"快速查找
+Bundle 'rking/ag.vim'
+Bundle 'dyng/ctrlsf.vim'
+let g:ctrlsf_ackprg = 'ag'
+let g:ctrlsf_context = '-B 3 -A 3'
+nmap <Leader>cf :CtrlSF<space>
+
+" git.  git操作还是习惯命令行,vim里面处理简单diff编辑操作
+Bundle 'tpope/vim-fugitive'
+nnoremap <leader>ge :Gdiff<CR>
+
+" 同git diff,实时展示文件中修改的行
+Bundle 'airblade/vim-gitgutter'
+let g:gitgutter_enabled = 1
+"let g:gitgutter_highlight_lines = 1
+nnoremap <leader>gs :GitGutterToggle<CR>
+
+" edit history, 可以查看回到某个历史状态
+Bundle 'sjl/gundo.vim'
+nnoremap <leader>h :GundoToggle<CR>
+"设置永久保存
+"try
+"	set undodir=~/.vim/temp_dirs/undodir
+"	set undofile
+"catch
+"endtry
+
+" 绘图 http://blog.chinaunix.net/uid-9525959-id-2001834.html
+Bundle 'DrawIt'
+
+"################### 显示增强 ###################
+
+" 新的airline配置
+Bundle 'bling/vim-airline'
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+"let g:airline_section_b = '%{strftime("%c")}'
+let g:airline_left_sep = '▶'
+let g:airline_left_alt_sep = '❯'
+let g:airline_right_sep = '◀'
+let g:airline_right_alt_sep = '❮'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+
+
+"括号显示增强
+Bundle 'kien/rainbow_parentheses.vim'
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 40
+let g:rbpt_loadcmd_toggle = 0
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+"################### 显示增强-主题 ###################"
+
+"主题 solarized
+Bundle 'altercation/vim-colors-solarized'
+"let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+let g:solarized_contrast="normal"
+let g:solarized_visibility="normal"
+
+
+"################### 快速导航 ###################
+"目录导航
+Bundle 'scrooloose/nerdtree'
+map <leader>n :NERDTreeToggle<CR>
+let NERDTreeHighlightCursorline=1
+let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
+"let NERDTreeDirArrows=0
+"let g:netrw_home='~/bak'
+"close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+
+"for minibufferexpl   上面那个记录buffer条
+Bundle 'fholgado/minibufexpl.vim'
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+"解决FileExplorer窗口变小问题
+let g:miniBufExplForceSyntaxEnable = 1
+let g:miniBufExplorerMoreThanOne=2
+let g:miniBufExplCycleArround=1
+
+"标签导航
+Bundle 'majutsushi/tagbar'
+nmap <F12> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_type_javascript = {
+    \ 'ctagstype' : 'JavaScript',
+    \ 'kinds'     : [
+        \ 'o:objects',
+        \ 'f:functions',
+        \ 'a:arrays',
+        \ 's:strings'
+    \ ]
+\ }
+
+"###### HTML/JS/JQUERY/CSS #########
+
+" for javascript
+Bundle "pangloss/vim-javascript"
+let g:html_indent_inctags = "html,body,head,tbody"
+let g:html_indent_script1 = "inc"
+let g:html_indent_style1 = "inc"
+
+" for javascript 自动补全,配合YCM,需要安装nodejs&npm
+"Bundle "marijnh/tern_for_vim"
+
+
+"##############################################  my slef config
+
+"#####  coffeescript
+Bundle 'kchmck/vim-coffee-script'
+
+"#####  emmet for vim http://www.zfanw.com/blog/zencoding-vim-tutorial-chinese.html
+Bundle "mattn/emmet-vim"
+autocmd FileType html,javascript,css EmmetInstall
+" 默认为 C-y ,
+"let g:user_emmet_expandabbr_key = '<Tab>'
+
+Bundle 'https://github.com/907th/vim-auto-save.git'
+let g:auto_save = 1
+let g:auto_save_no_updatetime = 1
+
+Bundle 'ianva/vim-youdao-translater'
+vnoremap <silent> <C-T> <Esc>:Ydv<CR>
+nnoremap <silent> <C-T> <Esc>:Ydc<CR>
+noremap <leader>yd :Yde<CR>
+
+Bundle 'Rykka/colorv.vim'
+Bundle 'mattn/webapi-vim'
+noremap <leader>cv :ColorVEdit<CR>
+autocmd FileType html,scss,css ColorVPreview
+"------------------------------------------- end of configs --------------------------------------------
