@@ -21,7 +21,7 @@ call vundle#rc()
 " vim plugin bundle control, command model
 " :BundleInstall     install 安装配置的插件
 " :BundleInstall!    update  更新
-" :BundleClean       remove plugin not in list 删除本地无用插件
+" :BundleClean       remove plugin not in list
 Bundle 'gmarik/vundle'
 
 "################### 基础 ######################
@@ -32,8 +32,10 @@ let g:syntastic_error_symbol='>>'
 let g:syntastic_warning_symbol='>'
 let g:syntastic_check_on_open=1
 let g:syntastic_enable_highlighting = 0
-let g:syntastic_javascript_checkers = ['jscs', 'jshint']
-let g:syntastic_html_checkers=['tidy', 'jscs', 'jshint']
+
+"jscs will support the ecmascript : https://github.com/jscs-dev/node-jscs/issues/374
+let g:syntastic_javascript_checkers = ['jshint', 'jscs']
+let g:syntastic_html_checkers=['tidy', 'jshint', 'jscs']
 
 "coffeescript https://blog.othree.net/log/2013/06/21/syntastic-coffeelint/
 let g:syntastic_coffee_checkers = ['coffeelint', 'coffee']
@@ -113,9 +115,6 @@ map <leader><space> :FixWhitespace<cr>
 Bundle 'Lokaltog/vim-easymotion'
 let g:EasyMotion_leader_key = 'f'
 
-"html 中  <%  %> 语法着色
-Bundle 'vim-scripts/matchit.zip'
-
 " 显示marks - 方便自己进行标记和跳转
 " m[a-zA-Z] add mark
 " '[a-zA-Z] go to mark
@@ -168,6 +167,17 @@ let g:ctrlsf_context = '-B 3 -A 3'
 nmap <Leader>cf :CtrlSF<space>
 
 " git.  git操作还是习惯命令行,vim里面处理简单diff编辑操作
+" https://github.com/tpope/vim-fugitive
+" ==================== 简单实用说明
+" :Git , 运行git …
+" :Gstatus , 运行git status
+" :Gcommit , 运行git commit
+" :Gdiff , 运行git diff
+" :Glog , 运行git log file
+" :Ge , 运行e file
+" :Gread , 运行git checkout file
+" :Gwrite , 运行git add file
+
 Bundle 'tpope/vim-fugitive'
 nnoremap <leader>ge :Gdiff<CR>
 
@@ -189,6 +199,8 @@ nnoremap <leader>h :GundoToggle<CR>
 
 " 绘图 http://blog.chinaunix.net/uid-9525959-id-2001834.html
 Bundle 'DrawIt'
+
+"一款挺牛逼的快速操作数字的plugin https://github.com/vim-scripts/VisIncr
 
 "################### 显示增强 ###################
 
@@ -287,6 +299,10 @@ let g:html_indent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
 
+" 有待测试
+"Bundle "othree/yajs.vim"
+"Bundle "isRuslan/vim-es6"
+
 " for javascript 自动补全,配合YCM,需要安装nodejs&npm
 "Bundle "marijnh/tern_for_vim"
 
@@ -294,7 +310,7 @@ let g:html_indent_style1 = "inc"
 "##############################################  my slef config
 
 "#####  coffeescript
-Bundle 'kchmck/vim-coffee-script'
+"Bundle 'kchmck/vim-coffee-script'
 
 "#####  emmet for vim http://www.zfanw.com/blog/zencoding-vim-tutorial-chinese.html
 Bundle "mattn/emmet-vim"
@@ -305,6 +321,7 @@ autocmd FileType html,javascript,css EmmetInstall
 Bundle 'https://github.com/907th/vim-auto-save.git'
 let g:auto_save = 1
 let g:auto_save_no_updatetime = 1
+let g:auto_save_in_insert_mode = 0
 
 Bundle 'ianva/vim-youdao-translater'
 vnoremap <silent> <C-T> <Esc>:Ydv<CR>
@@ -315,4 +332,30 @@ Bundle 'Rykka/colorv.vim'
 Bundle 'mattn/webapi-vim'
 noremap <leader>cv :ColorVEdit<CR>
 autocmd FileType html,scss,css ColorVPreview
+
+"ejs jst  语法高亮
+Bundle 'briancollins/vim-jst'
+"html 中  <%  %> 语法着色
+"Bundle 'vim-scripts/matchit.zip'
+
+
+"\m 高亮或反高亮一个单词
+"\n 清除当前的单词高亮   ---- 不要使用  实用MarkClean
+"\r 按照输入的正则表达式高亮单词
+"\/ 下一个
+"/? 上一个
+"Bundle 'LnL7/vim-mark'
+Bundle 'dimasg/vim-mark'
+
+
+"markdown    http://blog.chetui.org/644.html
+Bundle 'plasticboy/vim-markdown'
+
+
+"https://github.com/burnettk/vim-angular
+"Bundle 'burnettk/vim-angular'
+
+"todo_list
+Bundle 'vitalk/vim-simple-todo'
+
 "------------------------------------------- end of configs --------------------------------------------
