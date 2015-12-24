@@ -4,6 +4,8 @@ source ~/.vimrc_
 set list
 set listchars=tab:\|\ ,trail:+ " 显示Tab符，使用一高亮竖线代替
 
+set foldmethod=manual
+
 " 设定文件浏览器目录为当前目录   有些插件暂不能用
 set autochdir
 
