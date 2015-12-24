@@ -17,3 +17,10 @@ TODO:
 此版本为第一次上传版本。  下面是以后要做的努力
 1：  制作install.sh  自动化安装
 2:   各种插件的使用说明
+
+####简单使用
+* mkdir -p ~/.vim && cp vim_config_dir/* ~/.vim
+* git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+* mkdir ~/old_vim && cp ~/.vim* ~/old_vim
+* cp .vim* ~/
+* vim 进去之后 :BundleInstall
