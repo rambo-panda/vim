@@ -1,7 +1,7 @@
 {
 	// 添加diy检查规则
 	"additionalRules" : [
-		"~/.jscs_rules/*.js"
+		".jscs_rules/*.js"
 	],
 	"disallowNaiveIdentifiers": "ignoreProperties",
 	"disallowNativeDate": "ignoreProperties",
