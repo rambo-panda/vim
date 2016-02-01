@@ -1,0 +1,31 @@
+{
+	// 添加diy检查规则
+	"additionalRules" : [
+		"~/.jscs_rules/*.js"
+	],
+	"disallowNaiveIdentifiers": "ignoreProperties",
+	"disallowNativeDate": "ignoreProperties",
+
+
+	"maximumLineLength" : {
+		"value"            : 115,
+		"tabSize"          : 2,
+		"allowComments"    : true,
+		"allowUrlComments" : true,
+		"allowRegex"       : true
+	},
+	"requireSpacesInConditionalExpression" : {
+		"afterTest"         : true,
+		"beforeConsequent"  : true,
+		"afterConsequent"   : true,
+		"beforeAlternate"   : true
+	},
+	"requireSpacesInForStatement" : true,
+	"validateParameterSeparator": ", ",
+	"requireSpaceBetweenArguments": true,
+	"requireSpacesInConditionalExpression": true,
+	"disallowTrailingWhitespace" : true,
+	"disallowTrailingComma": true,
+	"validateIndentation" : "\t",
+	"requirePaddingNewLineAfterVariableDeclaration": true
+}

@@ -1,0 +1,41 @@
+{
+	"unused"       : "vars",
+	"forin"        : true,
+	"globalstrict" : true,
+
+	"node"         : true,
+	"eqeqeq"       : true,
+
+	"undef"        : true,
+	"latedef"      : true,
+	"laxbreak"     : true,
+	"laxcomma"     : true,
+	"expr"         : true,
+	"proto"        : true,
+	"curly"        : true,
+	"maxparams"       : 8,
+	"maxdepth"        : 4,
+	"maxcomplexity"   : 8,
+	"maxstatements"   : 60,
+
+	// ecmascript 6
+	"esnext"       : true,
+
+	"globals"      : {
+		"module"    : true,
+		"exports"   : true,
+		"console"   : true,
+		"process"   : true,
+		"Buffer"    : true,
+		"require"   : true,
+		"__dirname" : true,
+		"test"      : true,
+		"suite"     : true,
+
+		// 前端
+		"window"      : true,
+		"document"    : true,
+		"setTimeout"  : true,
+		"setInterval" : true
+	}
+}
